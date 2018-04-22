@@ -7,8 +7,8 @@ import router from './router'
 // import 'vant/lib/vant-css/index.css'
 // Vue.use(Vant)
 //全局引用vant
-import {Button} from 'vant'
-Vue.use(Button)
+import {Button,Row,Col} from 'vant'
+Vue.use(Button).use(Row).use(Col)
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
