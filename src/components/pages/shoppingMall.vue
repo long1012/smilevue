@@ -25,6 +25,7 @@
 </template>
 
 <script>
+    import axios from 'axios'
     export default {
         data() {
             return {
@@ -36,6 +37,16 @@
                 ]
             }
         },
+        created(){
+            axios({
+                url:'https://www.easy-mock.com/mock/5ae42225e3aaf3049f067466/smilevue/index',
+                method:'get'
+            }).then(response=>{
+                console.log(response)
+            }).catch(error=>{
+                console.log(error)
+            })
+        }
     }
 </script>
 
