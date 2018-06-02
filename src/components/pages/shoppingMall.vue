@@ -51,6 +51,20 @@
         <Floor :floorData="floor1" :floorTitle="floorName.floor1"></Floor>
         <Floor :floorData="floor2" :floorTitle="floorName.floor2"></Floor>
         <Floor :floorData="floor3" :floorTitle="floorName.floor3"></Floor>
+        <!--Hot Area-->
+        <div class="hot-area">
+            <div class="hot-title">热卖商品</div>
+            <div class="hot-goods">
+            <!--这里需要一个list组件-->
+                <van-list>
+                    <var-row gutter="20">
+                        <van-col span="12" v-for="(item ,index) in hotGoods" :key="index">
+                            <Goods-info :goodsImage="item.image" :goodsName="item.name" :goodsPrice="item.price"></Goods-info>
+                        </van-col>
+                    </var-row>
+                </van-list>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -60,6 +74,8 @@
     import {swiper,swiperSlide} from 'vue-awesome-swiper'
     import Floor from '../component/floor.vue'
     import {toMoney} from '@/filter/moneyFilter.js'
+    import GoodsInfo from '../component/goodsInfo.vue'
+
     export default {
         data() {
             return {
@@ -74,7 +90,8 @@
                 floor1:[],
                 floor2:[],
                 floor3:[],
-                floorName:{}
+                floorName:{},
+                hotGoods:[] //热卖商品
             }
         },
         filters:{
@@ -85,7 +102,8 @@
         components:{
             swiper,
             swiperSlide,
-            Floor
+            Floor,
+            GoodsInfo
         },
         created(){
             axios({
@@ -103,6 +121,7 @@
                     this.floor2=res.floor2;
                     this.floor3=res.floor3;
                     this.floorName=res.floorName;
+                    this.hotGoods=res.hotGoods;
                 }
             }).catch(error=>{
                 console.log(error)
@@ -173,5 +192,10 @@
         font-size:12px;
         text-align: center;
     }
-    
+    .hot-area{
+        text-align: center;
+        font-size:14px;
+        height: 1.8rem;
+        line-height:1.8rem;
+    }
 </style>
