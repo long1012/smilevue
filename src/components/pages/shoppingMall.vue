@@ -75,7 +75,7 @@
     import Floor from '../component/floor.vue'
     import {toMoney} from '@/filter/moneyFilter.js'
     import GoodsInfo from '../component/goodsInfo.vue'
-
+    import URL from "@/serviceAPI.config.js"
     export default {
         data() {
             return {
@@ -107,7 +107,7 @@
         },
         created(){
             axios({
-                url:'https://www.easy-mock.com/mock/5ae42225e3aaf3049f067466/smilevue/index',
+                url:URL.getShopingMallInfo,
                 method:'get'
             }).then(response=>{
                let res=response.data.data;
