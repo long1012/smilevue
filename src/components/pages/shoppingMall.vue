@@ -24,7 +24,7 @@
         <!-- type bar -->
         <div class="type-bar">
             <div v-for="(cate,index) in category" :key="index">
-                <img v-lazy="cate.image" width="90%">
+                <img v-lazy="cate.image" width="90%"><br />
                 {{cate.mallCategoryName}}
             </div>
         </div>
@@ -48,7 +48,9 @@
                 </swiper>
             </div>
         </div>
-        <Floor :floorData="floor1"></Floor>
+        <Floor :floorData="floor1" :floorTitle="floorName.floor1"></Floor>
+        <Floor :floorData="floor2" :floorTitle="floorName.floor2"></Floor>
+        <Floor :floorData="floor3" :floorTitle="floorName.floor3"></Floor>
     </div>
 </template>
 
@@ -69,9 +71,9 @@
                 adBanner:'',
                 recommendGoods:[],
                 floor1:[],
-                floor1_0:{},
-                floor1_1:{},
-                floor1_2:{},
+                floor2:[],
+                floor3:[],
+                floorName:{}
             }
         },
         components:{
@@ -92,9 +94,9 @@
                     this.bannerPic=res.slides;
                     this.recommendGoods=res.recommend;
                     this.floor1=res.floor1;
-                    this.floor1_0=this.floor1[0];
-                    this.floor1_1=this.floor1[1];
-                    this.floor1_2=this.floor1[2];
+                    this.floor2=res.floor2;
+                    this.floor3=res.floor3;
+                    this.floorName=res.floorName;
                 }
             }).catch(error=>{
                 console.log(error)
