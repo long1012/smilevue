@@ -7,7 +7,7 @@ const mongoose = require('mongoose')
     await connect();
     initSchemas();
     const user=mongoose.model('user');
-    let onUser = new user({userName:'xiaolong',password:'123456'});
+    let onUser = new user({userName:'xiaolong2',password:'123456'});
     onUser.save().then(()=>{
         console.log('插入成功')
     })

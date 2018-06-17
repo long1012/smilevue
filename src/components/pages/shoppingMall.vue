@@ -57,11 +57,11 @@
             <div class="hot-goods">
             <!--这里需要一个list组件-->
                 <van-list>
-                    <var-row gutter="20">
+                    <van-row gutter="20">
                         <van-col span="12" v-for="(item ,index) in hotGoods" :key="index">
                             <Goods-info :goodsImage="item.image" :goodsName="item.name" :goodsPrice="item.price"></Goods-info>
                         </van-col>
-                    </var-row>
+                    </van-row>
                 </van-list>
             </div>
         </div>
