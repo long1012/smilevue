@@ -13,5 +13,6 @@ export default {
 <style>
 #app {
   background:#f0f0f0;
+  overflow-x: hidden;
 }
 </style>

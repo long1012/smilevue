@@ -2,8 +2,12 @@ const Koa = require('koa')
 const app = new Koa()
 const { connect, initSchemas } = require("./database/init.js")
 const mongoose = require('mongoose')
-
+const bodyparser = require('koa-bodyparser')
 const Router = require('koa-router')
+const cors = require('koa2-cors')
+
+app.use(bodyparser());
+app.use(cors())
 let user = require('./appApi/user.js')
 
 //装在所有子路由
@@ -19,7 +23,7 @@ app.use(router.allowedMethods())
     await connect();
     initSchemas();
     const user=mongoose.model('user');
-    let onUser = new user({userName:'xiaolong3',password:'123456'});
+    //let onUser = new user({userName:'xiaolong3',password:'123456'});
     onUser.save().then(()=>{
         console.log('插入成功')
     })

@@ -30,7 +30,7 @@
         </div>
         <!-- adBanner area-->
         <div>
-            <img v-lazy="adBanner" width="100%">
+            <img v-lazy="adBanner" width="80%">
         </div>
         <!-- recommend goods area -->
         <div class="recommend-area">
@@ -131,6 +131,9 @@
 </script>
 
 <style scoped>
+    body{
+        overflow-x: hidden;
+    }
     .search-bar{
         height:2.2rem;
         background-color: #e5017d;
