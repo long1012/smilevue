@@ -11,6 +11,8 @@ const userSchema = new Schema({
     password : String,
     createeAt:{type:Date,default:Date.now()},
     lastLongAt : {type:Date,default:Date.now()} 
+},{
+    collection:'user'  //在mongodb常见数据表时，会默认在末尾添加一个s，该方法可以去掉默认的s
 })
 userSchema.pre("save",function(next){
     bcrypt.genSalt(SALT_WORK_FACTOR,(err,salt) =>{

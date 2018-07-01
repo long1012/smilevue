@@ -14,6 +14,7 @@
                 placeholder="请输入用户名"
                 required
                 @click-icon="userName=''"
+                :error-message="usernameErrorMsg"
             />
             <van-field 
                 v-model="passWord"
@@ -21,9 +22,10 @@
                 label="密码"
                 placeholder="请输入密码"
                 required
+                :error-message="passwordErrorMsg"
             />
             <div class="register-button">
-                <van-button type="primary" @click="axiosRegister()" size="large" :loading="openLoding">马上注册</van-button>
+                <van-button type="primary" @click="registerAction()" size="large" :loading="openLoding">马上注册</van-button>
             </div>
         </div>
     </div>
@@ -38,12 +40,19 @@
             return {
                 userName: '',
                 passWord:'',
-                openLoding:false  //是否开启注册的loading状态
+                openLoding:false,  //是否开启注册的loading状态
+                usernameErrorMsg:'',   //当用户名出现错误的时候
+                passwordErrorMsg:'',   //当密码出现错误的时候
             }
         },
         methods:{
             goBack:function(){
                 this.$router.go(-1);
+            },
+            registerAction(){
+                if(this.checkForm()){
+                    this.checkForm() && this.axiosRegister()
+                }
             },
             axiosRegister(){
                 this.openLoding=true;
@@ -68,6 +77,23 @@
                      Toast.fail("注册失败");
                      this.openLoding=false;
                 })
+            },
+            //表单验证方法
+            checkForm(){
+                let isOk= true
+                if(this.userName.length<5){
+                    this.usernameErrorMsg="用户名不能小于5位"
+                    isOk= false
+                }else{
+                    this.usernameErrorMsg=''
+                }
+                if(this.passWord.length<6){
+                    this.passwordErrorMsg="密码不能少于6位"
+                    isOk= false
+                }else{
+                    this.passwordErrorMsg=''
+                }
+                return isOk
             }
         }
     }
