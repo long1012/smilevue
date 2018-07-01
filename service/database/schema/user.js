@@ -23,4 +23,4 @@ userSchema.pre("save",function(next){
     })
 })
 //发布模型
-mongooes.model('user', userSchema)
+mongooes.model('User', userSchema)

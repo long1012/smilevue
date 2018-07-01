@@ -22,11 +22,7 @@ app.use(router.allowedMethods())
 ;(async()=>{
     await connect();
     initSchemas();
-    const user=mongoose.model('user');
-    //let onUser = new user({userName:'xiaolong3',password:'123456'});
-    onUser.save().then(()=>{
-        console.log('插入成功')
-    })
+    
 })()
 app.use(async (ctx) => {
     ctx.body = '<h1>hello Koa2</h1>'
