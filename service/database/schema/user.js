@@ -24,5 +24,22 @@ userSchema.pre("save",function(next){
         })
     })
 })
+userSchema.method={
+    comparePassword:(_password,password)=>{
+        return new Promise((resolve,reject)=>{
+            bcrypt.compare(_password, password,(err,isMatch)=>{
+                if(!err){
+                    resolve(isMatch)
+                }else{
+                    reject(err)
+                }
+            })
+        })
+    }
+}
+
+
+
+
 //发布模型
 mongooes.model('User', userSchema)
