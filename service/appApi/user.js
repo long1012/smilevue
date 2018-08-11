@@ -32,17 +32,21 @@ router.post('/login',async(ctx)=>{
         console.log(result)
         if(result){
             let newUser = new User();
-            await newUser.comparePassword(password, result.password).then((isMatch)=>{
-                ctx.body = { code: 200, message: isMatch }
-            }).catch(error=>{
-                console.log(error);
-                ctx.body = {code:500,message:error}
-            })
-        }else{
-            ctx.body={code:200,message:'用户名不存在'}
+            await newUser.comparePassword(password, result.password)
+                .then((isMatch) => {
+                    //返回比对结果
+                    ctx.body = { code: 200, message: isMatch }
+                })
+                .catch(error => {
+                    //出现异常，返回异常
+                    console.log(error)
+                    ctx.body = { code: 500, message: error }
+                })
+        } else {
+            ctx.body = { code: 200, message: '用户名不存在' }
         }
     }).catch(error=>{
-        console.log(err)
+        console.log(error)
         ctx.body = {code:500,message:error}
     })
 })
