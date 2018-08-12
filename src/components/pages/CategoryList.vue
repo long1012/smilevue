@@ -18,9 +18,18 @@
                     <div class="tabcategorySub">
                         <van-tabs v-model="active">
                             <van-tab v-for="(item,index) in categorySub" :key="index" :title="item.MALL_SUB_NAME">
-
                             </van-tab>
                         </van-tabs>
+                    </div>
+                    <div id="list-div">
+                        <van-list 
+                            v-model="loading" 
+                        :finished="finished" 
+                        @load="onLoad">
+                            <div class="list-item" v-for="item in list" :key="item">
+                                {{item}}
+                            </div>
+                        </van-list>
                     </div>
                 </van-col>
             </van-row>
@@ -38,7 +47,10 @@
                 category: [],
                 categotyIndex:0,
                 categorySub:[],     //小类类别
-                active:0            //从第0个激活标签
+                active:0,            //从第0个激活标签
+                list:[],
+                loading:false,   //上拉加载使用
+                finished:false,  //下拉加载是否没有数据了
             }
         },
         created() {
@@ -47,6 +59,8 @@
         mounted() {
             let winHeight = document.documentElement.clientHeight
             document.getElementById("leftNav").style.height=winHeight-46+'px'
+            document.getElementById("list-div").style.height=winHeight-90+'px'
+
         },
         methods: {
             getCategory() {
@@ -84,7 +98,19 @@
                 }).catch(error=>{
                     console.log(error)
                 })
-            }
+            },
+            //上拉加载方法
+            onLoad(){
+                setTimeout(()=>{
+                    for(let i=0;i<10;i++){
+                        this.list.push(this.list.length+1)
+                    }
+                    this.loading=false;
+                    if (this.list.length >= 40) {
+                    this.finished = true;
+                    }
+                },500)
+            },
         },
     }
 </script>
@@ -102,5 +128,14 @@
     }
     .categoryactive{
         background-color: #fff;
+    }
+    .list-item{
+        text-align: center;
+        line-height: 80px;
+        border-bottom: 1px solid #f0f0f0;
+        background-color: #fff;
+    }
+    #list-div{
+        overflow: scroll;
     }
 </style>
