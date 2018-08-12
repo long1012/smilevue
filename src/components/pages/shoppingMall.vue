@@ -59,7 +59,7 @@
                 <van-list>
                     <van-row gutter="20">
                         <van-col span="12" v-for="(item ,index) in hotGoods" :key="index">
-                            <Goods-info :goodsImage="item.image" :goodsName="item.name" :goodsPrice="item.price"></Goods-info>
+                            <Goods-info :goodsId="item.goodsId" :goodsImage="item.image" :goodsName="item.name" :goodsPrice="item.price"></Goods-info>
                         </van-col>
                     </van-row>
                 </van-list>
@@ -200,5 +200,9 @@
         font-size:14px;
         height: 1.8rem;
         line-height:1.8rem;
+    }
+    .hot-goods{
+        background: #fff;
+        padding-top:20px;
     }
 </style>
