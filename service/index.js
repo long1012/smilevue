@@ -30,6 +30,6 @@ app.use(async (ctx) => {
     ctx.body = '<h1>hello Koa2</h1>'
 })
 
-app.listen(13000, () => {
+app.listen(5000, () => {
     console.log('node success')
 })
