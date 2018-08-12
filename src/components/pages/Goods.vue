@@ -18,7 +18,9 @@
             价格：¥{{goodsInfo.PRESENT_PRICE | moneyfilter}}元
         </div>
         <div>
-            <van-tabs>
+            <van-tabs swipeable sticky>
+                <!-- swipeable 滑动切换table -->
+                <!-- sticky 吸顶效果 -->
                 <van-tab title="商品详情">
                     <div class="detail" v-html="goodsInfo.DETAIL"></div>
                 </van-tab>
