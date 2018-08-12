@@ -95,10 +95,10 @@ router.get('/getCategoryList',async(ctx)=>{
     }
 })
 //读取小类的数据
-router.get('/getCategorySubList', async (ctx) => {
+router.post('/getCategorySubList', async (ctx) => {
     try {
-        //let catrgoryId = ctx.request.body.categoryId
-        let catrgoryId = 1
+        let catrgoryId = ctx.request.body.categoryId
+        //let catrgoryId = 1
         const CategorySub = mongoose.model('CategorySub')
         let result = await CategorySub.find({ MALL_CATEGORY_ID: catrgoryId}).exec()
         ctx.body = { code: 200, message: result }
