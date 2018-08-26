@@ -22,6 +22,7 @@
                         </van-tabs>
                     </div>
                     <div id="list-div">
+                        <van-pull-refresh v-model="isRefresh" @refresh="onRefresh">
                         <van-list 
                             v-model="loading" 
                         :finished="finished" 
@@ -30,6 +31,7 @@
                                 {{item}}
                             </div>
                         </van-list>
+                        </van-pull-refresh>
                     </div>
                 </van-col>
             </van-row>
@@ -51,6 +53,7 @@
                 list:[],
                 loading:false,   //上拉加载使用
                 finished:false,  //下拉加载是否没有数据了
+                isRefresh:false, //下拉刷新
             }
         },
         created() {
@@ -107,10 +110,20 @@
                     }
                     this.loading=false;
                     if (this.list.length >= 40) {
-                    this.finished = true;
+                        this.finished = true;
                     }
                 },500)
             },
+            //下拉舒心
+            onRefresh(){
+                setTimeout(() => {
+                    this.isRefresh=false;
+                    this.finished = false;
+                    this.list=[]
+
+                    this.onLoad()
+                }, 500);
+            }
         },
     }
 </script>
