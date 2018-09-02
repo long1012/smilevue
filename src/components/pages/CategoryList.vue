@@ -16,7 +16,7 @@
                 </van-col>
                 <van-col span="18">
                     <div class="tabcategorySub">
-                        <van-tabs v-model="active">
+                        <van-tabs v-model="active" @click="onClickCategorySub">
                             <van-tab v-for="(item,index) in categorySub" :key="index" :title="item.MALL_SUB_NAME">
                             </van-tab>
                         </van-tabs>
@@ -27,8 +27,14 @@
                                 v-model="loading" 
                             :finished="finished" 
                             @load="onLoad">
-                                <div class="list-item" v-for="item in list" :key="item">
-                                    {{item}}
+                                <div class="list-item" v-for="(item,index) in goodList" :key="index">
+                                    <div class="list-item-img">
+                                        <img :src="item.IMAGE1" width="100%" alt="">
+                                    </div>
+                                    <div class="list-item-text">
+                                        <div>{{item.NAME}}</div>
+                                        <div>{{item.PRI_PRICE}}</div>
+                                    </div>
                                 </div>
                             </van-list>
                         </van-pull-refresh>
@@ -52,12 +58,15 @@
                 active:0,            //从第0个激活标签
                 loading:false,   //上拉加载使用
                 finished:false,  //上加载是否没有数据了
-                list:[],         //商品数据
+                page:1,          //商品列表的页数
+                goodList:[],     //商品信息
+                categorySubId:'', //商品子分类ID
                 isRefresh:false  //下拉刷新
             }
         },
         created() {
             this.getCategory()
+            
         },
         mounted() {
             let winHeight = document.documentElement.clientHeight
@@ -84,6 +93,9 @@
             },
             clickCategory(index,categotyIndex){
                 this.categotyIndex = index
+                this.page=1
+                this.finished=false
+                this.goodList=[]
                 this.getCategorySubByCategoryId(categotyIndex)
             },
             //根据大类ID读取小类类别列表
@@ -97,6 +109,8 @@
                     if(response.data.code==200 && response.data.message){
                         this.categorySub = response.data.message
                         this.active = 0
+                        this.categorySubId = this.categorySub[0].ID
+                        this.onLoad()
                     }
                 }).catch(error=>{
                     console.log(error)
@@ -105,14 +119,9 @@
             //上拉加载方法
             onLoad(){
                 setTimeout(()=>{
-                    for(let i=0;i<10;i++){
-                        this.list.push(this.list.length+1)
-                    }
-                    this.loading=false;
-                    if (this.list.length >= 40) {
-                        this.finished = true;
-                    }
-                },500)
+                    this.categorySubId = this.categorySubId?this.categorySubId:this.categorySub[0].ID
+                    this.getGoodList()
+                },1000)
             },
             //下拉刷新
             onRefresh(){
@@ -122,6 +131,34 @@
                     this.list=[];
                     this.onLoad()
                 }, 500);
+            },
+            getGoodList(){
+                axios({
+                    url:url.getGoodsListBycategorySubId,
+                    method:'post',
+                    data:{
+                        categorySubId:this.categorySubId,
+                        page:this.page
+                    }
+                }).then(response=>{
+                    console.log(response.data);
+                    if(response.data.code==200&&response.data.message.length){
+                        this.page++
+                        this.goodList=this.goodList.concat(response.data.message)
+                    }else{
+                        this.finished = true
+                    }
+                    this.loading=false
+                }).catch(err=>{
+                    console.log(err)
+                })
+            },
+            onClickCategorySub(index,title){
+                this.categorySubId = this.categorySub[index].ID
+                this.goodList=[]
+                this.finished=false
+                this.page=1
+                this.onLoad()
             }
         },
     }
@@ -142,12 +179,22 @@
         background-color: #fff;
     }
     .list-item{
-        text-align: center;
-        line-height: 80px;
+        display: flex;
+        flex-direction: row;
+        font-size:0.8rem;
         border-bottom: 1px solid #f0f0f0;
         background-color: #fff;
+        padding:5px;
     }
     #list-div{
         overflow: scroll;
+    }
+    .list-item-img{
+        flex:8;
+    }
+    .list-item-text{
+        flex:16;
+        margin-top:10px;
+        margin-left:10px;
     }
 </style>
