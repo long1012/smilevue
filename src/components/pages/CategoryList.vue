@@ -22,15 +22,15 @@
                         </van-tabs>
                     </div>
                     <div id="list-div">
-                        <van-pull-refresh v-model="isRefresh" @refresh="onRefresh">
-                        <van-list 
-                            v-model="loading" 
-                        :finished="finished" 
-                        @load="onLoad">
-                            <div class="list-item" v-for="item in list" :key="item">
-                                {{item}}
-                            </div>
-                        </van-list>
+                        <van-pull-refresh v-model="isRefresh" @refresh="onRefresh()">
+                            <van-list 
+                                v-model="loading" 
+                            :finished="finished" 
+                            @load="onLoad">
+                                <div class="list-item" v-for="item in list" :key="item">
+                                    {{item}}
+                                </div>
+                            </van-list>
                         </van-pull-refresh>
                     </div>
                 </van-col>
@@ -50,10 +50,10 @@
                 categotyIndex:0,
                 categorySub:[],     //小类类别
                 active:0,            //从第0个激活标签
-                list:[],
                 loading:false,   //上拉加载使用
-                finished:false,  //下拉加载是否没有数据了
-                isRefresh:false, //下拉刷新
+                finished:false,  //上加载是否没有数据了
+                list:[],         //商品数据
+                isRefresh:false  //下拉刷新
             }
         },
         created() {
@@ -114,13 +114,12 @@
                     }
                 },500)
             },
-            //下拉舒心
+            //下拉刷新
             onRefresh(){
                 setTimeout(() => {
                     this.isRefresh=false;
                     this.finished = false;
-                    this.list=[]
-
+                    this.list=[];
                     this.onLoad()
                 }, 500);
             }
