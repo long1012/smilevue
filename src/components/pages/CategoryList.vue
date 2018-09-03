@@ -27,13 +27,13 @@
                                 v-model="loading" 
                             :finished="finished" 
                             @load="onLoad">
-                                <div class="list-item" v-for="(item,index) in goodList" :key="index">
+                                <div class="list-item" @click="goGoodsInfo(item.ID)" v-for="(item,index) in goodList" :key="index">
                                     <div class="list-item-img">
                                         <img :src="item.IMAGE1" width="100%" alt="" :onerror="errorImage" />
                                     </div>
                                     <div class="list-item-text">
                                         <div>{{item.NAME}}</div>
-                                        <div>{{item.PRI_PRICE}}</div>
+                                        <div>¥{{item.ORI_PRICE | moneyFilter}}</div>
                                     </div>
                                 </div>
                             </van-list>
@@ -49,6 +49,7 @@
     import axios from 'axios'
     import url from '@/serviceAPI.config.js'
     import {Toast} from 'vant'
+    import {toMoney} from '@/filter/moneyFilter.js'
     export default {
         data() {
             return {
@@ -63,6 +64,11 @@
                 categorySubId:'', //商品子分类ID
                 isRefresh:false,  //下拉刷新
                 errorImage:'this.src="'+require('@/assets/images/errorimg.png')+'"'
+            }
+        },
+        filters:{
+            moneyFilter(money){
+                return toMoney(money)
             }
         },
         created() {
@@ -161,6 +167,14 @@
                 this.finished=false
                 this.page=1
                 this.onLoad()
+            },
+            //跳转到商品详细页面
+            goGoodsInfo(id){
+                this.$router.push({
+                    name:'Goods',
+                    params:{goodsId:id}
+                })
+                //如果使用的是path传递参数，那么就需要使用query来传递参数
             }
         },
     }
