@@ -32,7 +32,7 @@
 
         <div class="goods-bottom">
             <div>
-                <van-button size="large" type="primary">加入购物车</van-button>
+                <van-button size="large" type="primary" @click="addGoodsToCart">加入购物车</van-button>
             </div>
             <div>
                 <van-button size="large" type="danger">直接购买</van-button>
@@ -83,6 +83,28 @@
             },
             onClickLeft(){
                 this.$router.go(-1)
+            },
+            //增加购物车功能
+            addGoodsToCart(){
+                let cartInfo = localStorage.cartInfo ? JSON.parse(localStorage.cartInfo) : []
+                let isHaveGoods = cartInfo.find(cart=>cart.goodsId == this.goodsId)
+                console.log(isHaveGoods)
+                if(!isHaveGoods){
+                    let newGoodsInfo = {
+                        goodsId:this.goodsInfo.ID,
+                        Name:this.goodsInfo.Name,
+                        Price:this.goodsInfo.PRESENT_PRICE,
+                        image:this.goodsInfo.IMAGE1,
+                        count:1
+                    }
+                    cartInfo.push(newGoodsInfo)
+                    localStorage.cartInfo = JSON.stringify(cartInfo)
+                    Toast.success('添加成功')
+                }else{
+                    Toast.success('已有此商品')
+                }
+
+                this.$router.push({name:'Cart'})
             }
         },
     }

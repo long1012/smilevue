@@ -24,7 +24,7 @@
                     this.cartInfo = JSON.parse(localStorage.cartInfo)
                 }
                 console.log(JSON.stringify(this.cartInfo)+'this.cartInfo')
-                this.isEmpty=this.cartInfo.length > 0 ? ture : false
+                this.isEmpty=this.cartInfo.length > 0 ? true : false
             }
         },
     }
