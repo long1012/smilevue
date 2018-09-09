@@ -205,5 +205,7 @@
     .hot-goods{
         background: #fff;
         padding-top:20px;
+        height:130rem;
+        overflow: hidden;
     }
 </style>
