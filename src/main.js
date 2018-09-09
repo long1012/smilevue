@@ -7,8 +7,8 @@ import router from './router'
 // import 'vant/lib/vant-css/index.css'
 // Vue.use(Vant)
 //全局引用vant
-import {PullRefresh,Tab,Tabs,Button,Row,Col,SwipeItem,Swipe,Lazyload,List,Field,NavBar} from 'vant'
-Vue.use(Button).use(PullRefresh).use(Tab).use(Tabs).use(Row).use(Col).use(Swipe).use(SwipeItem).use(Lazyload).use(List).use(Field).use(NavBar)
+import { PullRefresh,Stepper,Tab,Tabs,Button,Row,Col,SwipeItem,Swipe,Lazyload,List,Field,NavBar} from 'vant'
+Vue.use(Button).use(Stepper).use(PullRefresh).use(Tab).use(Tabs).use(Row).use(Col).use(Swipe).use(SwipeItem).use(Lazyload).use(List).use(Field).use(NavBar)
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

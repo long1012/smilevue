@@ -92,7 +92,7 @@
                 if(!isHaveGoods){
                     let newGoodsInfo = {
                         goodsId:this.goodsInfo.ID,
-                        Name:this.goodsInfo.Name,
+                        name:this.goodsInfo.NAME,
                         Price:this.goodsInfo.PRESENT_PRICE,
                         image:this.goodsInfo.IMAGE1,
                         count:1
