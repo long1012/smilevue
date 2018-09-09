@@ -20,13 +20,28 @@
                         <van-stepper v-model="item.count"/>
                     </div>
                 </div>
-                <div class="long-goods-price">¥{{item.Price}}</div>
+                <div class="long-goods-price">
+                    <div>
+                        ¥{{item.Price | moneyFilter}}
+                    </div>
+                    <div>
+                        x{{item.count}}
+                    </div>
+                    <div class="allPrice">
+                        ¥{{item.Price*item.count | moneyFilter}}
+                    </div>
+                </div>
             </div>
+        </div>
+        <!-- 显示总金额 -->
+        <div class="totalMoney">
+            商品总价:¥{{totalMoney | moneyFilter}}
         </div>
     </div>
 </template>
 
 <script>
+    import {toMoney} from '@/filter/moneyFilter.js'
     export default {
         data() {
             return {
@@ -36,6 +51,21 @@
         },
         created(){
             this.getCartInfo()
+        },
+        computed:{
+            totalMoney(){
+                let allMoney = 0;
+                this.cartInfo.forEach((item,index)=>{
+                    allMoney += item.Price*item.count
+                })
+                localStorage.cartInfo = JSON.stringify(this.cartInfo)
+                return allMoney
+            }
+        },
+        filters:{
+            moneyFilter(money){
+                return toMoney(money)
+            }
         },
         methods: {
             //得到购物车数据的方法
@@ -65,7 +95,6 @@
 }
 .cart-list{
     background-color: #fff;
-
 }
 .long-row{
     display:flex;
@@ -74,6 +103,7 @@
     padding:.5rem;
     font-size:0.85rem;
     border-bottom:1px solid #e4e7ed;
+    background:#fff;
 }
 .long-img{
     flex:6;
@@ -89,5 +119,14 @@
 .long-goods-price{
     flex:4;
     text-align: right;
+}
+.allPrice{
+    color:red;
+}
+.totalMoney{
+    text-align: right;
+    background-color: #fff;
+    border-bottom:1px solid #e4e7ed;
+    padding:5px;
 }
 </style>
